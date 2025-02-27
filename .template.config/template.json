@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Carlos Gutierrez",
+  "classifications": [
+    "DDD",
+    "Clean Architecture",
+    "MediatR",
+    "FluentValidation",
+    "Fast API"
+  ],
+  "identity": "PahEmprender.DDDTemplate.CSharp",
+  "name": "DDD Solution Template",
+  "shortName": "pe-ddd",
+  "sourceName": "DDDTemplate",
+  "preferNameDirectory": true,
+  "tags": {
+    "language": "C#",
+    "type": "solution"
+  },
+  "sources": [
+    {
+      "exclude": [
+        "**/[Bb]in/**",
+        "**/[Oo]bj/**",
+        ".template.config/**/*",
+        "**/*.filelist",
+        "**/*.user",
+        "**/*.lock.json",
+        "init_template.sh",
+        "test_template.sh"
+      ]
+    },
+    {
+      "source": "."
+    }
+  ]
+}
