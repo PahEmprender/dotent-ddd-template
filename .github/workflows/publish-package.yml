@@ -1,0 +1,85 @@
+name: Publish NuGet Package
+
+on:
+  push:
+    branches: [ main ]
+    paths-ignore:
+      - '**/*.md'
+      - '.github/**'
+      - '.vscode/**'
+      - '.devcontainer/**'
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0 # Important for versioning
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '9.0.x'
+        
+    - name: Install GitVersion
+      uses: gittools/actions/gitversion/setup@v0.10.2
+      with:
+        versionSpec: '5.x'
+        
+    - name: Determine Version
+      id: gitversion
+      uses: gittools/actions/gitversion/execute@v0.10.2
+      with:
+        useConfigFile: true
+        
+    - name: Display GitVersion outputs
+      run: |
+        echo "Major: ${{ steps.gitversion.outputs.major }}"
+        echo "Minor: ${{ steps.gitversion.outputs.minor }}"
+        echo "Patch: ${{ steps.gitversion.outputs.patch }}"
+        echo "SemVer: ${{ steps.gitversion.outputs.semVer }}"
+        
+    - name: Restore dependencies
+      run: dotnet restore
+      
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+      
+    - name: Test
+      run: dotnet test --configuration Release --no-build
+      
+    - name: Pack Template
+      run: |
+        dotnet pack ./packer/PahEmprender.DDDTemplate.CSharp/PahEmprender.DDDTemplate.CSharp.csproj \
+        -o ./packer/nupkg \
+        -p:PackageVersion=${{ steps.gitversion.outputs.semVer }}
+        
+    - name: Test Template Installation
+      run: |
+        dotnet new --install ./packer/nupkg/PahEmprender.DDDTemplate.CSharp.${{ steps.gitversion.outputs.semVer }}.nupkg
+        TEST_DIR="zTest_$(date +%s)"
+        dotnet new pe-ddd -n My.New.DDD -o $TEST_DIR
+        cd $TEST_DIR
+        dotnet build
+        dotnet test
+        cd ..
+        rm -rf $TEST_DIR
+        
+    - name: Publish to GitHub Packages
+      run: |
+        dotnet nuget push ./packer/nupkg/PahEmprender.DDDTemplate.CSharp.${{ steps.gitversion.outputs.semVer }}.nupkg \
+        --api-key ${{ secrets.GITHUB_TOKEN }} \
+        --source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
+        
+    - name: Create GitHub Release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v${{ steps.gitversion.outputs.semVer }}
+        release_name: Release v${{ steps.gitversion.outputs.semVer }}
+        draft: false
+        prerelease: false 

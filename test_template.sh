@@ -1,1 +1,0 @@
-dotnet new pe-ddd -n MyNewDDDProject -o zTest_$(date +%s)
