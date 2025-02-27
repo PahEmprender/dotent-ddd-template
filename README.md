@@ -1,6 +1,11 @@
 # DDD Solution Template
 
-This template provides a foundational structure for building .NET applications following Domain-Driven Design (DDD) principles. It is packaged as a reusable solution to drive consistent and high-quality DDD implementations across multiple projects. The template includes predefined layers for Domain, Application, Infrastructure, and API, along with essential interfaces and utility classes to ensure robust design aligned with DDD best practices.
+[![Build Status](https://github.com/PahEmprender/pe-ddd-template/workflows/Publish%20NuGet%20Package/badge.svg)](https://github.com/PahEmprender/pe-ddd-template/actions)
+[![NuGet Version](https://img.shields.io/nuget/v/PahEmprender.DDDTemplate.CSharp.svg)](https://www.nuget.org/packages/PahEmprender.DDDTemplate.CSharp)
+[![License](https://img.shields.io/github/license/PahEmprender/pe-ddd-template)](https://github.com/PahEmprender/pe-ddd-template/blob/main/LICENSE)
+[![.NET](https://img.shields.io/badge/.NET-9.0-blue.svg)](https://dotnet.microsoft.com/download)
+
+This template provides a foundational structure for building .NET applications following Domain-Driven Design (DDD) principles. It is designed to drive consistent and high-quality DDD implementations across multiple projects. The template includes predefined layers for Domain, Application, Infrastructure, and API, along with essential interfaces and utility classes to ensure robust design aligned with DDD best practices.
 
 ## Project Structure
 
@@ -17,7 +22,7 @@ This structure adheres to DDD's layered architecture, separating concerns to pro
 
 ## Key Interfaces and Utilities
 
-The following sections detail the interfaces and utilities provided by this package, their purposes, and justifications for inclusion. These components are designed to be generic and reusable while enforcing DDD principles.
+The following sections detail the interfaces and utilities provided by this template, their purposes, and justifications for inclusion. These components are designed to be generic and reusable while enforcing DDD principles.
 
 ### Domain Layer
 
@@ -74,11 +79,11 @@ The infrastructure layer provides technical implementations for persistence and 
 
 ### Application Layer
 
-The application layer orchestrates use cases and coordinates interactions between the domain and infrastructure layers. It leverages MediatR for command and query handling, as indicated by the `Directory.Packages.props` file including `MediatR.Extensions.Microsoft.DependencyInjection`. Key practices include:
+The application layer orchestrates use cases and coordinates interactions between the domain and infrastructure layers. It leverages MediatR for command and query handling. Key practices include:
 
 - **MediatR Integration**: Uses `IRequest` and `IRequestHandler` interfaces provided by MediatR for commands (state-changing operations) and queries (read operations).
-- **Validation**: Employs FluentValidation (version 11.2.2) for validating commands and queries, configurable via MediatR pipeline behaviors.
-- **No Additional Interfaces**: Since MediatR provides sufficient abstractions, no custom interfaces are defined here, keeping the package lightweight and focused.
+- **Validation**: Employs FluentValidation for validating commands and queries, configurable via MediatR pipeline behaviors.
+- **No Additional Interfaces**: Since MediatR provides sufficient abstractions, no custom interfaces are defined here, keeping the template lightweight and focused.
 
 ### Utilities
 
@@ -90,7 +95,7 @@ Beyond interfaces, the template provides utilities to streamline development:
 
 ## Recommendations
 
-To maximize the benefits of this package, consider the following recommendations:
+To maximize the benefits of this template, consider the following recommendations:
 
 - **Extensibility**
   - Extend repository interfaces with domain-specific methods as needed (e.g., `IOrderRepository.GetOverdueOrdersAsync`).
@@ -105,80 +110,15 @@ To maximize the benefits of this package, consider the following recommendations
 - **Testability**
   - Write unit tests for domain logic by mocking `IRepository<T>` and other interfaces, ensuring isolation from infrastructure concerns.
   - Leverage `IDatabaseContext` and `IUnitOfWork` to create test doubles for persistence testing.
-  - Use the included `DDDTemplate.UnitTests` and `DDDTemplate.IntegrationTests` projects as starting points for comprehensive test suites, enhanced by tools like xUnit and coverlet (as per `Directory.Packages.props`).
+  - Use the included `DDDTemplate.UnitTests` and `DDDTemplate.IntegrationTests` projects as starting points for comprehensive test suites.
 
 ## Getting Started
 
-1. **Install the Template**: Use the .NET CLI to install this template package:
-   ```bash
-   dotnet new install PahEmprender.DDDTemplate.CSharp
-   ```
-2. **Create a New Solution**: Generate a new solution using the template:
+1. **Create a New Solution**: Generate a new solution using the template:
    ```bash
    dotnet new pe-ddd -n YourProjectName
    ```
-3. **Customize**: Replace placeholder classes (e.g., `Class1.cs`) with your domain entities, application handlers, and infrastructure implementations.
-4. **Run**: Build and run the API project (`DDDTemplate.API`) to verify the setup.
+2. **Customize**: Replace placeholder classes with your domain entities, application handlers, and infrastructure implementations.
+3. **Run**: Build and run the API project (`DDDTemplate.API`) to verify the setup.
 
-This template leverages .NET 9.0, ensuring modern features like nullable reference types and implicit usings are enabled for cleaner code.
-
-## Dependencies
-
-The template includes the following key packages (managed centrally via `Directory.Packages.props`):
-- **MediatR.Extensions.Microsoft.DependencyInjection** (10.0.1): For command/query handling and dependency injection.
-- **FluentValidation** (11.2.2): For validating commands and queries.
-- **Microsoft.AspNetCore.OpenApi** (9.0.2): For API documentation in the API layer.
-- **xUnit**, **Microsoft.NET.Test.Sdk**, **coverlet.collector**: For unit and integration testing.
-
-## Conclusion
-
-By using this `DDD Solution Template`, developers can quickly establish a robust DDD architecture with standardized interfaces and utilities. The design promotes separation of concerns, testability, and scalability, making it an ideal foundation for enterprise-grade .NET applications. 
-
-## Continuous Integration and Deployment
-
-This template includes a GitHub Actions workflow for automated building, testing, and publishing of the NuGet package when changes are pushed to the main branch.
-
-### Semantic Versioning
-
-The package uses semantic versioning (SemVer) based on conventional commits. The version is automatically determined using GitVersion based on commit messages:
-
-- **Major Version Bump**: Commits starting with `breaking:` or `major:` (e.g., `breaking: remove legacy API`)
-- **Minor Version Bump**: Commits starting with `feature:` or `minor:` (e.g., `feature: add new repository interface`)
-- **Patch Version Bump**: Commits starting with `fix:` or `patch:` (e.g., `fix: correct typo in domain event handler`)
-- **No Version Bump**: Commits starting with `none:` or `skip:` (e.g., `none: update documentation`)
-
-### GitHub Actions Workflow
-
-The workflow (`publish-package.yml`) performs the following steps:
-
-1. **Build**: Compiles the solution to ensure code integrity
-2. **Test**: Runs all unit and integration tests
-3. **Pack**: Creates a NuGet package with the automatically determined version
-4. **Test Installation**: Verifies the package can be installed and used correctly
-5. **Publish**: Pushes the package to NuGet.org and creates a GitHub release
-
-### Setting Up Secrets
-
-To enable the publishing workflow, you need to add the following secret to your GitHub repository:
-
-- **NUGET_API_KEY**: Your NuGet API key for publishing packages
-
-Add this secret in your GitHub repository under Settings > Secrets and variables > Actions > New repository secret.
-
-### Manual Publishing
-
-If you need to publish a package manually, you can use the following commands:
-
-```bash
-# Pack the template
-dotnet pack ./packer/PahEmprender.DDDTemplate.CSharp/PahEmprender.DDDTemplate.CSharp.csproj -o ./packer/nupkg -p:PackageVersion=X.Y.Z
-
-# Test the template installation
-dotnet new --install ./packer/nupkg/PahEmprender.DDDTemplate.CSharp.X.Y.Z.nupkg
-dotnet new pe-ddd -n Test.Project -o TestDir
-
-# Publish to NuGet
-dotnet nuget push ./packer/nupkg/PahEmprender.DDDTemplate.CSharp.X.Y.Z.nupkg --api-key YOUR_API_KEY --source https://api.nuget.org/v3/index.json
-```
-
-Replace `X.Y.Z` with your desired version number and `YOUR_API_KEY` with your NuGet API key. 
+This template leverages .NET 9.0, ensuring modern features like nullable reference types and implicit usings are enabled for cleaner code. 
