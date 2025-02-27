@@ -1,6 +1,6 @@
 # DDD Solution Template
 
-[![Build Status](https://github.com/PahEmprender/pe-ddd-template/workflows/Publish%20NuGet%20Package/badge.svg)](https://github.com/PahEmprender/pe-ddd-template/actions)
+[![Build Status](https://github.com/PahEmprender/dotent-ddd-template/workflows/Publish%20NuGet%20Package/badge.svg)](https://github.com/PahEmprender/dotent-ddd-template/actions)
 [![NuGet Version](https://img.shields.io/nuget/v/PahEmprender.DDDTemplate.CSharp.svg)](https://www.nuget.org/packages/PahEmprender.DDDTemplate.CSharp)
 [![License](https://img.shields.io/github/license/PahEmprender/pe-ddd-template)](https://github.com/PahEmprender/pe-ddd-template/blob/main/LICENSE)
 [![.NET](https://img.shields.io/badge/.NET-9.0-blue.svg)](https://dotnet.microsoft.com/download)
