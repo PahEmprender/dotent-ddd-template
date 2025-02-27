@@ -1,9 +1,9 @@
 # DDD Solution Template
 
 [![Build Status](https://github.com/PahEmprender/dotent-ddd-template/workflows/Publish%20NuGet%20Package/badge.svg)](https://github.com/PahEmprender/dotent-ddd-template/actions)
-[![GitHub Package Version](https://img.shields.io/github/v/release/PahEmprender/pe-ddd-template?label=GitHub%20Package)](https://github.com/PahEmprender/pe-ddd-template/packages)
+[![GitHub Package Version](https://img.shields.io/github/v/release/PahEmprender/dotent-ddd-template?label=GitHub%20Package)](https://github.com/PahEmprender/dotent-ddd-template/packages)
 [![NuGet Version](https://img.shields.io/nuget/v/PahEmprender.DDDTemplate.CSharp.svg)](https://www.nuget.org/packages/PahEmprender.DDDTemplate.CSharp)
-[![License](https://img.shields.io/github/license/PahEmprender/pe-ddd-template)](https://github.com/PahEmprender/pe-ddd-template/blob/main/LICENSE)
+[![License](https://img.shields.io/github/license/PahEmprender/dotent-ddd-template)](https://github.com/PahEmprender/dotent-ddd-template/blob/main/LICENSE)
 [![.NET](https://img.shields.io/badge/.NET-9.0-blue.svg)](https://dotnet.microsoft.com/download)
 
 This template provides a foundational structure for building .NET applications following Domain-Driven Design (DDD) principles. It is designed to drive consistent and high-quality DDD implementations across multiple projects. The template includes predefined layers for Domain, Application, Infrastructure, and API, along with essential interfaces and utility classes to ensure robust design aligned with DDD best practices.
